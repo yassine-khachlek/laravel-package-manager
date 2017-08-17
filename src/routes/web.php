@@ -13,7 +13,7 @@
 
 
 
-Route::prefix('/')->name('packages.')->group(function () {
+Route::name('packages.')->group(function () {
 
 	Route::get('/{provider}/{package}', 'HomeController@show')->name('show');
 

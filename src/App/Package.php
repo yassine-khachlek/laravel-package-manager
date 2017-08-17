@@ -2,6 +2,7 @@
 
 namespace Yk\LaravelPackageManager\App;
 
+use Config;
 use Yk\LaravelPackageManager\App\Vendor;
 
 class Package
@@ -16,7 +17,7 @@ class Package
 
                 $packages[] = $vendor.'/'.basename($package);
 
-            }, \File::directories(base_path('vendor/'.$vendor)));
+            }, \File::directories(base_path(Config::get('vendor.yk.laravel-package-manager.package.path').'/'.$vendor)));
 
         }, Vendor::all());
 

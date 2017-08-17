@@ -2,6 +2,8 @@
 
 namespace Yk\LaravelPackageManager\App;
 
+use Config;
+
 class Vendor
 {
     public static function all() {
@@ -10,7 +12,7 @@ class Vendor
         	
             return basename($vendor);
 
-        }, \File::directories(base_path('vendor')));
+        }, \File::directories(base_path(Config::get('vendor.yk.laravel-package-manager.package.path'))));
 
     }
 }
