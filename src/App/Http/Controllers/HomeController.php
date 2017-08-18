@@ -85,7 +85,6 @@ class HomeController extends Controller
 
         $success = \File::deleteDirectory(storage_path('vendor/yk/laravel-package-manager/tmp'));
 
-        
         $this->registerAutoloadPsr(explode('/', $composer_json->name)[0], explode('/', $composer_json->name)[1]);
 
         $this->registerProvider(explode('/', $composer_json->name)[0], explode('/', $composer_json->name)[1]);
@@ -117,7 +116,7 @@ class HomeController extends Controller
     private function registerProvider ($provider_name, $package_name) {
 
         $provider = join('\\',
-                    [studly_case($provider_name), studly_case($package_name), studly_case($package_name).'ServiceProvider::class']
+                    [studly_case($provider_name), studly_case($package_name), studly_case($package_name).'ServiceProvider']
                 );
 
         $config_app = include base_path('config/app.php');
@@ -126,7 +125,25 @@ class HomeController extends Controller
             $config_app['providers'][] = $provider;
         }
 
-        File::put(base_path('config/app.php'), '<?php return ' . var_export($config_app, true) . ';');
+        foreach ($config_app['providers'] as $key => $value) {
+            $config_app['providers'][$key] = $value.'::class';
+        }
+
+        foreach ($config_app['aliases'] as $key => $value) {
+            $config_app['aliases'][$key] = $value.'::class';
+        }
+
+        $var_export = var_export($config_app, true);
+
+        foreach ($config_app['providers'] as $key => $value) {
+            $var_export = str_replace("'".str_replace(['\\'], ['\\\\'], $value)."'", $value, $var_export);
+        }
+
+        foreach ($config_app['aliases'] as $key => $value) {
+            $var_export = str_replace("'".str_replace(['\\'], ['\\\\'], $value)."'", $value, $var_export);
+        }
+
+        File::put(base_path('config/app.php'), '<?php return ' . $var_export . ';');
 
     }
 }
