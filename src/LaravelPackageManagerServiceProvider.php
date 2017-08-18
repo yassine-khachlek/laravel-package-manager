@@ -14,7 +14,7 @@ class LaravelPackageManagerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->router->group(['namespace' => 'Yk\LaravelPackageManager\App\Http\Controllers', 'prefix' => Config::get('vendor.yk.laravel-package-manager.route.prefix')],
+        $this->app->router->group(['namespace' => 'Yk\LaravelPackageManager\App\Http\Controllers', 'prefix' => Config::get('vendor.yk.laravel-package-manager.route.prefix'), 'middleware' => ['web']], 
             function(){
                 require __DIR__.'/routes/web.php';
             }

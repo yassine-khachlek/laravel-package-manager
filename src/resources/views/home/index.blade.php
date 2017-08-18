@@ -2,6 +2,8 @@
 
 @section('content')
 
+	<a href="{{ route('packages.create') }}" class="btn btn-primary btn-lg btn-block" role="button">Create</a>
+
 	<table class="table">
 		<thead>
 			<tr>
@@ -20,7 +22,7 @@
 					{{ $package }}
 				</td>
 				<td>
-					@if( File::exists(base_path('vendor/'.$package.'/README.md')) )
+					@if( File::exists(base_path(Config('vendor.yk.laravel-package-manager.package.path').'/'.$package.'/README.md')) )
 
 						<a href="{{ route('packages.show', explode('/', $package)) }}" class="btn btn-primary btn-lg btn-block" role="button">Details</a>
 

@@ -19,4 +19,8 @@ Route::name('packages.')->group(function () {
 
 	Route::get('/', 'HomeController@index')->name('index');
 
+	Route::get('/create', 'HomeController@create')->name('create');
+
+	Route::post('/', 'HomeController@store')->name('store');
+
 });

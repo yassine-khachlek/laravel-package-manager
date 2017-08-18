@@ -9,6 +9,6 @@ return [
     |
     */
 
-	'path' => 'vendor',
+	'path' => 'packages',
 
 ];
